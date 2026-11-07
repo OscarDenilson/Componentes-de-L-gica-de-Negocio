@@ -1,0 +1,17 @@
+# Checklist de entrega PIA
+- [x] BRD refinado
+- [x] 20 historias de usuario con escenarios Gherkin
+- [x] Glosario de dominio
+- [x] ADRs y diagramas DDD/UML
+- [x] Java/Spring Boot, PostgreSQL, Specifications, State Machine, Domain Events y API REST
+- [x] OpenAPI/Swagger configurado
+- [x] Dockerfile, Compose, `.env.example`
+- [x] Workflow CI definido
+- [x] Pruebas unitarias y de integración creadas; JaCoCo con umbral 80%
+- [ ] Ejecutar `mvn verify` y conservar reporte de cobertura real ≥80%
+- [ ] Publicar en GitHub y verificar workflow exitoso; commits reales del equipo
+- [ ] Desplegar en Railway/Render/equivalente y anotar URL real
+- [ ] Probar Swagger en producción y tomar capturas
+- [ ] Completar resultado clínico, historial e indicadores
+- [ ] Implementar seguridad de identidad/roles y pruebas de concurrencia
+- [ ] Realizar demo en vivo y defensa técnica

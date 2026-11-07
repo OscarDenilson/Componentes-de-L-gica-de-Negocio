@@ -1,0 +1,12 @@
+sequenceDiagram
+ actor Recepcionista
+ actor Médico
+ participant API
+ participant Cita
+ Recepcionista->>API: registrar llegada
+ API->>Cita: registerArrival(hora)
+ Cita-->>API: minutos de tardanza + LLEGADA_REGISTRADA
+ Note over Cita: No se decide automáticamente por tolerancia
+ Médico->>API: ATENDER / ESPERAR / REPROGRAMAR
+ API->>Cita: decide(médico asignado, decisión)
+ Cita-->>API: estado y evento de decisión

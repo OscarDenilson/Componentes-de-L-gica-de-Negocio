@@ -1,0 +1,22 @@
+# Glosario de dominio
+- **Paciente:** persona que solicita y recibe atención médica.
+- **Recepcionista:** rol que consulta disponibilidad, registra pacientes, citas y llegadas, y gestiona reprogramaciones.
+- **Médico:** profesional que atiende la consulta y decide sobre pacientes tardíos.
+- **Personal administrativo:** actor que participa en gestión administrativa e indicadores.
+- **Aseguradora:** organización cuyo convenio puede intervenir en el pago o requerir autorización previa.
+- **Sucursal:** ubicación física de MediNova.
+- **Especialidad:** área médica utilizada para buscar disponibilidad y registrar una cita.
+- **Agenda compartida:** registro consultado por recepción para localizar disponibilidad.
+- **Disponibilidad:** horarios proporcionados por el médico.
+- **Cita:** registro que relaciona paciente, médico, especialidad, sucursal, fecha, hora, motivo y aseguradora cuando aplica.
+- **Consulta:** atención médica realizada después del registro de llegada.
+- **No-show:** cita reservada a la que el paciente no se presenta.
+- **Sobrecupo:** cita adicional permitida por algunos médicos según una política aún por formalizar.
+- **Cancelación:** anulación de una cita o jornada que debe conservar evidencia.
+- **Reagendar:** ofrecer o realizar una nueva cita.
+- **Confirmación:** intento de recepción por confirmar una cita un día antes.
+- **Autorización:** respuesta previa requerida por algunas aseguradoras.
+- **Expediente:** identificador del paciente.
+- **Motivo de consulta:** razón de atención capturada al agendar.
+- **Resultado de consulta:** receta, estudios solicitados o nueva cita.
+- **Duplicidad:** más de una cita conflictiva para el mismo médico/intervalo.
