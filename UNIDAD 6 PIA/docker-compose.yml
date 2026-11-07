@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${DB_NAME:-medinova}
+      POSTGRES_USER: ${DB_USER:-medinova}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-change_me_local}
+    ports: ["5432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-medinova} -d ${DB_NAME:-medinova}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+  app:
+    build: .
+    env_file: [.env]
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/${DB_NAME:-medinova}
+      DB_USER: ${DB_USER:-medinova}
+      DB_PASSWORD: ${DB_PASSWORD:-change_me_local}
+      PORT: ${APP_PORT:-8080}
+    ports: ["${APP_PORT:-8080}:8080"]
+    depends_on:
+      db: {condition: service_healthy}
+  tests:
+    build: .
+    profiles: ["test"]
+    env_file: [.env]
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/${DB_NAME:-medinova}
+      DB_USER: ${DB_USER:-medinova}
+      DB_PASSWORD: ${DB_PASSWORD:-change_me_local}
+    command: ["mvn", "-B", "verify"]
+    depends_on:
+      db: {condition: service_healthy}
+volumes:
+  pgdata: {}
