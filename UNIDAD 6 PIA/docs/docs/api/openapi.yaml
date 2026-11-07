@@ -1,0 +1,86 @@
+openapi: 3.0.3
+info:
+  title: MediNova Appointment API
+  version: 1.0.0
+  description: API académica para gestión de citas. No exponer con datos reales sin autenticación y controles de privacidad.
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/appointments:
+    get:
+      summary: Listar citas
+      responses:
+        '200': {description: Lista de citas}
+    post:
+      summary: Crear cita
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [patientId, doctorId, branchId, specialty, startAt, endAt, reason]
+              properties:
+                patientId: {type: integer, format: int64}
+                doctorId: {type: integer, format: int64}
+                branchId: {type: integer, format: int64}
+                specialty: {type: string}
+                startAt: {type: string, format: date-time}
+                endAt: {type: string, format: date-time}
+                reason: {type: string}
+                patientActive: {type: boolean, default: true}
+                doctorActive: {type: boolean, default: true}
+                branchActive: {type: boolean, default: true}
+                insurerAuthorizationRequired: {type: boolean, default: false}
+                insurerAuthorized: {type: boolean, default: true}
+      responses:
+        '201': {description: Cita creada}
+        '400': {description: Solicitud inválida o specification incumplida}
+        '409': {description: Conflicto de horario}
+  /api/appointments/{id}:
+    get:
+      summary: Consultar cita
+      parameters: [{in: path, name: id, required: true, schema: {type: integer, format: int64}}]
+      responses:
+        '200': {description: Cita encontrada}
+        '404': {description: No encontrada}
+  /api/appointments/{id}/arrival:
+    post:
+      summary: Registrar llegada y calcular tardanza
+      parameters: [{in: path, name: id, required: true, schema: {type: integer, format: int64}}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {type: object, required: [arrivedAt], properties: {arrivedAt: {type: string, format: date-time}}}
+      responses:
+        '200': {description: Llegada registrada}
+        '409': {description: Transición inválida}
+  /api/appointments/{id}/decision:
+    post:
+      summary: Registrar decisión del médico asignado
+      parameters: [{in: path, name: id, required: true, schema: {type: integer, format: int64}}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {type: object, required: [doctorId, decision], properties: {doctorId: {type: integer, format: int64}, decision: {type: string, enum: [ATENDER, ESPERAR, REPROGRAMAR]}, notes: {type: string}}}
+      responses:
+        '200': {description: Decisión registrada}
+        '403': {description: Médico no asignado}
+        '409': {description: Llegada no registrada}
+  /api/appointments/{id}/confirm:
+    post:
+      summary: Confirmar cita
+      parameters: [{in: path, name: id, required: true, schema: {type: integer, format: int64}}]
+      responses: {'200': {description: Confirmada}, '409': {description: Estado incompatible}}
+  /api/appointments/{id}/cancel:
+    post:
+      summary: Cancelar cita
+      parameters: [{in: path, name: id, required: true, schema: {type: integer, format: int64}}]
+      responses: {'200': {description: Cancelada}, '409': {description: Estado incompatible}}
+  /api/appointments/{id}/no-show:
+    post:
+      summary: Registrar inasistencia
+      parameters: [{in: path, name: id, required: true, schema: {type: integer, format: int64}}]
+      responses: {'200': {description: No-show registrado}, '409': {description: Estado incompatible}}

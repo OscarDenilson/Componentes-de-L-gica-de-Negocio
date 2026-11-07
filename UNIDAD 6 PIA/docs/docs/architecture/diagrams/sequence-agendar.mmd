@@ -1,0 +1,17 @@
+sequenceDiagram
+ actor Recepcionista
+ participant API
+ participant Specification
+ participant Servicio
+ participant PostgreSQL
+ Recepcionista->>API: POST /api/appointments
+ API->>Specification: validar paciente/médico/sucursal/autorización/intervalo
+ Specification-->>API: válido / inválido
+ API->>Servicio: crear cita
+ Servicio->>PostgreSQL: buscar traslape
+ alt sin conflicto
+ Servicio->>PostgreSQL: guardar SOLICITADA
+ PostgreSQL-->>API: cita creada
+ else conflicto
+ Servicio-->>API: conflicto 409
+ end
