@@ -1,0 +1,2 @@
+package mx.medinova.domain;
+public enum AppointmentStatus { SOLICITADA, CONFIRMADA, LLEGADA_REGISTRADA, ATENDIDA, REQUIERE_REPROGRAMACION, CANCELADA, NO_SHOW }
